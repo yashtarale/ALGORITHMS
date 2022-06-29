@@ -1,0 +1,85 @@
+Write a program to implement Breadth First Search using backtracking
+Algorithm
+procedure BFS(v)
+    ⌀ ← empty Queue
+    mark[v] ← visited
+    enqueue v into Queue
+    while Queue is not empty do
+        u ← first(Queue)
+        enqueue u from Queue
+        for each node w adjacent to u do
+            if mark[w] ≠ visited then
+                mark[w] ← visited
+                enqueue w into Queue
+            end_if
+        end_for
+    end_while
+Program
+#include<stdio.h>
+
+void BFS(int matrix[100][100], int visited[100], int queue[100], int node, int x)
+{
+
+	int front = 0;
+	int rear = 0;
+	queue[front] = x;
+	visited[x] = -1;
+
+
+	while(front <= rear)
+	{
+		int temp = queue[front];
+		front++;
+		printf("%d ",temp);
+
+		x = temp;
+		for(int i = 0; i < node; i++)
+		{
+			if(visited[i+1] == 0 && matrix[x-1][i] == 1)
+			{
+				rear++;
+				queue[rear] = i+1;
+				visited[i+1] = 1;
+			}
+		}
+	}
+	
+}
+
+int main()
+{
+	int visited[100];
+	int queue[100];
+	int node;
+	printf("Enter number of node : ");
+	scanf("%d",&node);
+
+	for(int i = 0; i <= node; i++)
+	{
+		visited[i] = 0;
+		queue[i] = -1;
+	}
+
+	int matrix[100][100];
+	printf("Enter Values : \n");
+	for(int i = 0; i < node; i++)
+		for(int j = 0; j < node; j++)
+			scanf("%d",&matrix[i][j]);
+		
+	
+	
+	printf("Output : ");
+	BFS(matrix, visited, queue, node, 1);
+	printf("\n");
+	return 0;
+}
+O/P:
+    Enter number of node : 6
+    Enter Values : 
+    0 1 0 1 0 0 
+    0 0 1 0 1 0
+    0 0 0 0 1 1
+    0 1 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 1
+    Output : 1 2 4 3 5 6

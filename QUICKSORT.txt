@@ -1,0 +1,111 @@
+Write a program to implement quicksort using divide and conque
+
+Algorithm
+quicksort(int a[], int l, int u)
+{   
+    int j;
+    if (l < u)
+    {
+        j = partition(a,l,u);
+        quicksort(a,l,j-1);
+        quicksort(a,j+1,u);
+    }
+}
+
+int partition(int a[], int l, int u)
+{    
+    int v, i, j, temp;
+    v = a[i];
+    i = 1;
+    j = u + 1;
+    do{
+        do{i++;}while(a[i]<u && i<=u);
+        do{j--;}while(a[j]>u);
+        if(i<j)
+        {
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }while(i<j);
+    swap[j] with piavote
+}  
+Program
+#include<stdio.h>
+
+void swap(int *a , int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int *arr , int lb , int ub)
+{
+    int pivot = lb;
+    int i = lb , j = ub + 1;
+    int temp;
+
+    while(i<j)
+    {
+        do{
+            i++;
+        }while (arr[i]<=arr[pivot] && i<ub);    
+
+        do{
+            j--;
+        }while (arr[j]>arr[pivot] && j>lb);    
+
+        if(i<j)
+        {
+            swap(&arr[i] , &arr[j]);
+        }
+        
+    }
+    swap(&arr[pivot] , &arr[j]);
+
+    return j;
+
+}
+
+void quickSort(int *arr , int lb , int ub)
+{
+    int j;
+    if(lb<ub)
+    {
+        j = partition(arr,lb,ub);    
+        quickSort(arr,lb,j-1);
+        quickSort(arr,j+1,ub);
+
+    }
+
+}
+
+
+int main()
+{
+    int n;
+    printf("Enter size of array : ");
+    scanf("%d" , &n);
+    int arr[n];
+    printf("Enter element in unsorted order:");
+
+    for(int i=0 ; i<n ; i++)
+    {
+        scanf("%d" , &arr[i]);
+    }
+
+
+    quickSort(arr , 0 , n-1);
+    printf("The sorted array is:\t");
+    for(int i=0 ; i<n ; i++)
+    {
+        printf("%d\t" , arr[i]);
+    }
+
+    return 0;
+}
+O/P:
+    Enter size of array : 6
+    Enter element in unsorted order:22 1 10 5 60 45
+    The sorted array is:    1       5       10      22      45      60

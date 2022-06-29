@@ -1,0 +1,112 @@
+Implement C program for n-queen problem using backtracking method
+Algorithm
+PLACE(k)
+
+global integer X[0:k-1]
+local integer i,k;
+for i ← 0 to k-1 do
+    if x(i) = X(k) or ABS(X(i) - X(k)) == ABS(i - k) then
+        [two queens in the same col. or same diag. or same row]
+        return false
+    end_if
+end_for
+return true
+
+
+
+
+NQueen(n)
+
+[general n queen problem, n > 3] 
+integer k;
+global X[0:n - 1]; 
+x(1) ← 0;
+k ← 1;
+while k> 0 do
+    X(k) ← X(k)+1 ; 
+    while X(k) ≤ n and Not PLACE (k) do
+        X(k) ← X(k) + 1;
+    end_while
+
+    if X(k) ≤ n then
+        if k = n then
+            [is solution complete?]
+            print (X);
+        else
+            k ← k + 1; [go to the next row]
+            X(k) ← 0;
+        end_if
+    else
+        k ← k - 1;
+    end_if
+end_while
+Program
+#include<stdio.h>
+#include<math.h>
+int a[30],count = 0;
+int place(int pos)
+{
+    int i;
+    for(i=1; i<pos; i++)
+        if(a[i]==a[pos] || abs(a[i] - a[pos]) == abs(i - pos))
+            return 0;
+    return 1;
+}
+
+void print_solution(int n)
+{
+    int i,j;
+    count++;
+    printf("\nSolution %d: \n",count);
+    for(i=1; i<=n; i++)
+    {
+        for(j=1; j<=n; j++)
+            if(a[i] == j)
+                printf("Q\t");
+            else
+                printf("*\t");
+        printf("\n");
+    }    
+}
+
+void queen(int n)
+{
+    int k = 1;
+    a[k] = 0;
+    while(k != 0)
+    {
+        a[k] = a[k] + 1;
+        while(a[k] <=n && !place(k))
+            a[k]++;
+        if(a[k] <= n)
+            if(k == n)
+                print_solution(n);
+            else
+            {
+                k++;
+                a[k] = 0;
+            }
+        else
+            k--;
+    }
+}
+void main()
+{
+    int i, n = 4;
+    queen(n);
+    printf("\nTotal solution %d\n",count);
+}
+O/P:
+    Solution 1: 
+    *       Q       *       *
+    *       *       *       Q
+    Q       *       *       *
+    *       *       Q       *
+
+    Solution 2: 
+    *       *       Q       *
+    Q       *       *       *
+    *       *       *       Q
+    *       Q       *       *
+
+    Total solution 2

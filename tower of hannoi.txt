@@ -1,0 +1,46 @@
+1/
+
+Study, analyse and implement tower of hannoi where the aim it to more entire stack to another rod for n = 3 and understand the concept of recursion.
+Algorithm
+
+procedure hannoi(disk,source,aux,destination)
+    if disk == 1 then
+        move disk from source to destination
+    else
+        hannoi(n-1,source,destination,aux)
+        move disk from source to destination
+        hannoi(n-1, aux, source, destination)
+    end_if
+end_procedure
+
+
+
+program
+
+#include<stdio.h>
+int towerOfHannoi(int n, char source, char aux, char destination) 
+{
+    if(n == 1)
+    {
+        printf("move disk from %c to %c\n", source, destination);
+        return 0;
+    }
+    else
+        towerOfHannoi(n-1, source, destination, aux);
+    printf("move disk from %c to %c\n", source, destination);
+    towerOfHannoi(n-1, aux, source, destination);
+}
+void main()
+{
+    towerOfHannoi(3,'A','B','C');
+}
+
+
+O/P:
+    move disk from A to C
+    move disk from A to B
+    move disk from C to B
+    move disk from A to C
+    move disk from B to A
+    move disk from B to C
+    move disk from A to C

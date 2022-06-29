@@ -1,0 +1,110 @@
+Explain the knapsack algorithm to find an optimal solution of getting maximum profit and implement the program
+Algorithm
+local real cu;            [remaining knapsack capacity]
+local int i, n;
+x ← 0;                   [initilize solution vector to zero]
+cu ← M;
+for i ← 0 to n-1 do
+    if W[i] > cu then
+        [no space remaining]
+        break
+    end_if
+    x[i] ← 1;
+    cu ← cu - W[i];
+end_for
+if i<= n then
+    x[i] ← cu / W[i];
+end_if
+
+where: 
+    p[0:n-1]  :   profit ratios
+    W[0:n-1]  :   weight ratios
+    p[i]/W[i] :   arrange in ascending order
+        M     :   knapsack capacity
+    X[0:n-1]  :   solution vector
+    these are all real numbers
+    
+
+
+
+
+Program
+#include<stdio.h>
+void knapsack(int n, float weight[], float profit[], float capacity)
+{
+    float x[20], tp = 0;
+    int i, j, cu;
+    cu = capacity;
+
+    for (i = 0; i < n; i++)
+        x[i] = 0.0;
+
+    for (i = 0; i < n; i++)
+        if(weight[i] > cu)
+            break;
+        else
+        {
+            x[i] = 1.0;
+            tp = tp + profit[i];
+            cu = cu - weight[i];
+        }
+    if(i <= n)
+        x[i] = cu / weight[i];
+
+    tp = tp + x[i] * profit[i];
+    printf("\nMaximum profit: %f\n", tp);
+    
+}
+
+int main()
+{
+    float weight[20], profit[20], capacity;
+    int num, i, j;
+    float ratio[20], temp;
+
+    printf("\nEnter the number of objects: ");
+    scanf("%d", &num);
+
+    printf("Enter the weights of objects: ");
+    for(i = 0; i < num; i++)
+        scanf("%f", &weight[i]);
+
+    printf("Enter the profit of objects: ");
+    for(i = 0; i < num; i++)
+        scanf("%f", &profit[i]);
+
+    printf("Enter the capacity of knapsack: ");
+    scanf("%f", &capacity);
+
+    for(i = 0; i < num; i++)
+        ratio[i] = profit[i] / weight[i];
+
+    for(i = 0; i < num; i++)
+        for (int j = i + 1; j < num; j++)
+            if(ratio[i] < ratio[j])
+            {
+                temp = ratio[j];
+                ratio[j] = ratio[i];
+                ratio[i] = temp;
+
+                temp = weight[j];
+                weight[j] = weight[i];
+                weight[i] = temp;
+
+                temp = profit[j];
+                profit[j] = profit[i];
+                profit[i] = temp;
+            }
+    knapsack(num, weight, profit, capacity);
+    return 0;     
+}
+
+
+s
+O/P:
+    Enter the number of objects: 3
+    Enter the weights of objects: 18 15 10
+    Enter the profit of objects: 25 24 15
+    Enter the capacity of knapsack: 20
+
+    Maximum profit: 31.500000
